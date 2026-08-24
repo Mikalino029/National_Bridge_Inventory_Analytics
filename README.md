@@ -27,18 +27,7 @@ The raw NBI dataset contains heavily corrupted records, missing values, and mixe
 ## 🗄️ 2. SQL Relational Database & Benchmarking Queries
 The polished output is loaded into an SQLite database instance. To enable granular data discovery, the `bridge_analysis_queries.sql` script utilizes **SQL Window Functions** to calculate network baselines right alongside individual rows:
 
-```sql
-SELECT 
-    Bridge_ID,
-    State_Code,
-    Material_Type,
-    Infrastructure_Generation,
-    Average_Condition_Score,
-    ROUND(AVG(Average_Condition_Score) OVER(PARTITION BY Material_Type), 2) AS Material_Network_Avg,
-    ROUND(AVG(Average_Condition_Score) OVER(PARTITION BY Infrastructure_Generation), 2) AS Generation_Network_Avg
-FROM bridge_inspections
-ORDER BY Average_Condition_Score ASC;
-```
+🔗 [Click here to view the complete multi-dimensional SQL query script.](Scripts/multi_dimensional_bridge_analysis.sql)
 * **Impact:** This query isolates individual critical assets (e.g., a failing Steel bridge scoring `0.0`) and contrasts them directly against the broader material group baseline (`6.65`), allowing project controls managers to catch anomalies instantly.
 
 ---
